@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib
+
+def f(x, c):
+    return 1-np.exp(-c*x)
+
+def f_prime(x, c):
+    return c*np.exp(-c*x)
+
+def error(old_guess, new_guess):
+    return abs((old_guess-new_guess)/(1-1/f_prime(old_guess, 2)))
+
+old = 0.5
+new = f(old, 2)
+print(error(old, new))
+iterations = 0
+
+while error(old, new) > 10**(-6):
+    old = new
+    new = f(old, 2)
+    iterations += 1
+    print(new)
+
+print(new)
+print(iterations)

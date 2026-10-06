@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib
+
+old = 0.1
+omega = 0.8
+
+def f(x, c):
+    return 1-np.exp(-c*x)
+
+def f_prime(x, c):
+    return c*np.exp(-c*x)
+
+def error(old_guess, new_guess):
+    return (old_guess-new_guess)/(1-1/f_prime(old_guess, 2))
+
+def over_error(old_guess, new_guess):
+    return (old_guess-new_guess)/(1-1/((1+omega)*f_prime(old_guess, 2)-omega))
+
+new = f(old, 2)
+
+print(over_error(old, new))
+iterations = 0
+
+while abs(over_error(old, new)) > 10**-6:
+    old = new
+    new =(1+omega)*f(old, 2)-omega*old
+    iterations += 1
+    print(new)
+
+print(iterations)
